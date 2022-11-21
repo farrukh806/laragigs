@@ -55,6 +55,14 @@
         </i>
             Edit
         </a>
+        <form action="/listings/{{$listing->id}}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button class="text-red-500">
+                <i class="fa fa-trash"></i> 
+                Delete
+            </button>
+        </form>
     </div>
 </div>
 
