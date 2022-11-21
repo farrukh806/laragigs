@@ -30,6 +30,7 @@ class ListingController extends Controller
 
     // Store job listing data
     public function store(Request $request){
+
         $form_fields = $request -> validate([
             'title' => 'required',
             'company' => ['required', Rule::unique('listings', 'company')],
@@ -37,10 +38,13 @@ class ListingController extends Controller
             'website' => 'required',
             'email' => ['required', 'email'],
             'tags'  => 'required',
-            'description' => 'required'
+            'description' => 'required',
 
         ]);
 
+        if($request->hasFile('logo')){
+            $form_fields['logo'] = $request -> file('logo')->store('logos', 'public');
+        }
         Listing::create($form_fields);
         return redirect('/')->with('message', 'Listing created successfully.');
     }
