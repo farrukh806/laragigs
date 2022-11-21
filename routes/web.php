@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,15 +17,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (Request $request, Response $response) {
-    return view('listings', [
-        'heading' => 'Job Listings',
-        'listings' => Listing::all()
-    ]);
-});
+// Get all job listings
+Route::get('/', [ListingController::class, 'index']);
 
-Route::get('/listings/{listing}', function (Listing $listing) {
-    return view('listing', [
-        'listing' => $listing
-    ]);
-});
+
+
+// Get job listing form
+Route::get('/listings/create', [ListingController::class, 'create']);
+
+
+// Store job listing data
+Route::post('/listings', [ListingController::class, 'store']);
+
+
+// Get a single job listing
+Route::get('/listings/{listing}',[ListingController::class, 'show']);
