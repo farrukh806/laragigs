@@ -21,13 +21,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ListingController::class, 'index']);
 
 
-
 // Get job listing form
 Route::get('/listings/create', [ListingController::class, 'create']);
 
 
 // Store job listing data
 Route::post('/listings', [ListingController::class, 'store']);
+
+
+//Get Job listing editing form
+Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']);
+
+//Update Job listing 
+Route::put('/listings/{listing}/edit', [ListingController::class, 'update']);
 
 
 // Get a single job listing
