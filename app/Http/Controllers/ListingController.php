@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
-// use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\List_;
 
 class ListingController extends Controller
 {
@@ -46,6 +44,9 @@ class ListingController extends Controller
         if($request->hasFile('logo')){
             $form_fields['logo'] = $request -> file('logo')->store('logos', 'public');
         }
+
+        // dd(auth() -> id());
+        $form_fields['user_id'] = auth() -> id();
         Listing::create($form_fields);
         return redirect('/')->with('message', 'Listing created successfully.');
     }
@@ -58,6 +59,11 @@ class ListingController extends Controller
 
     // Update exisiting job listing data
     public function update(Request $request, Listing $listing){
+
+        // Make sure logged in user is the owner of the listing
+        if($listing -> user_id != auth() -> id()){
+            return redirect('/');
+        }
 
         $form_fields = $request -> validate([
             'title' => 'required',
@@ -78,8 +84,15 @@ class ListingController extends Controller
     }
 
     public function destroy(Listing $listing){
+        if($listing -> user_id != auth() -> id()){
+            return redirect('/');
+        }
         $listing -> delete();
         return redirect('/') -> with('message', 'Listing deleted successfully.');
+    }
+
+    public function manage(){
+        return view('listings.manage', ['listings' => auth() -> user() -> listings() -> get()]);
     }
 
 }

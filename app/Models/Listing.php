@@ -9,7 +9,7 @@ class Listing extends Model
 {
     use HasFactory;
     // This $filleable property is used to submit forms 
-    protected $fillable = ['company', 'location', 'title', 'description', 'website', 'email', 'tags', 'logo'];
+    protected $fillable = ['company', 'location', 'title', 'description', 'website', 'email', 'tags', 'logo', 'user_id'];
 
     /*
      OR else we can do

@@ -33,6 +33,11 @@ Route::put('/listings/{listing}/edit', [ListingController::class, 'update']) -> 
 //Delete Job listing 
 Route::delete('/listings/{listing}', [ListingController::class, 'destroy']) -> middleware('auth');
 
+// Manage listings
+Route::get('/listings/manage', [ListingController::class, 'manage']) -> middleware('auth');
+
+// Get a single job listing
+Route::get('/listings/{listing}',[ListingController::class, 'show']);
 
 //Get user register form
 Route::get('/users/register', [UserController::class, 'create']) -> middleware('guest');
@@ -48,6 +53,3 @@ Route::get('/users/login', [UserController::class, 'login']) -> name('login')-> 
 
 // Login user
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
-
-// Get a single job listing
-Route::get('/listings/{listing}',[ListingController::class, 'show']);

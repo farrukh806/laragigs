@@ -1,4 +1,14 @@
 @extends('layout') @section('content')
+
+
+
+@if(auth() -> id() != $listing -> user_id)
+    <script>
+        window.location.href = "/";
+    </script>
+@endif
+
+
 <div
     class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24"
 >
